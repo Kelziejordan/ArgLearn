@@ -1,0 +1,16 @@
+name: ArgLearn V1 RED
+
+on:
+  push:
+    branches:
+      - arglearn-v1-red
+
+jobs:
+  red-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Execute ArgLearn V1 RED fixture
+        run: bash tests/arglearn-v1-red.sh
