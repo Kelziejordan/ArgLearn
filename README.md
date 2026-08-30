@@ -12,6 +12,7 @@ V1 begins with the Multi-LLM orchestration system. The interfaces are intentiona
 
 - ArgCore: frozen contracts, mandates, and enforcement boundary.
 - ArgOS: governed runtime, execution, and orchestration.
+- ATL: canonical Translation Layer between Intent and Planning; semantic consistency is an architectural concern that must be empirically testable.
 - ArgAtlas: authoritative engineering record, continuity, provenance, and evidence.
 - ArgLearn: active learning, analysis, discovery, and experiment engine.
 
@@ -49,3 +50,11 @@ Observe -> identify gap -> hypothesize -> design experiment -> execute -> analyz
 ArgLearn learns from real evidence. Declared model capabilities are hypotheses; observed performance is evidence.
 
 The first learning domain is independent Multi-LLM orchestration: model strengths, weaknesses, reliability, cost, latency, task fit, independence of perspectives, and user-value outcomes.
+
+## Current integration checkpoint — 2026-08-30
+
+ACL-001 defines the Canonical Intelligence Lifecycle as Intent -> ATL Translation -> Planning -> Execution -> Validation -> Observation -> Memory -> Next Intent, with Recovery as an exception path and Learning as a governed feedback loop.
+
+This creates a direct ArgLearn responsibility: empirical evaluation should be able to test lifecycle claims rather than merely measure isolated model outputs. Relevant measurements include execution outcomes, validation results, resource use, latency, reliability, recovery behavior, and evidence lineage.
+
+An ATL reconciliation item is open because an older Rust workspace uses `argos-atl` for a C-ABI / foreign-language interface. ArgLearn must not assume that interface is equivalent to the semantic Translation Layer. The distinction is tracked in ArgAtlas.
