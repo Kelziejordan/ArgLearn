@@ -1,29 +1,22 @@
 # ArgLearn
 
-ArgLearn is the active learning and discovery system for the Arg ecosystem.
+ArgLearn is the active learning, analysis, discovery, and experiment system for the Arg ecosystem.
 
-## V1 Scope
+## Architectural role
 
-ArgLearn observes authorized system evidence, identifies knowledge gaps, can design and execute governed learning experiments, derives empirical findings, and produces learning candidates with evidence and confidence.
-
-V1 begins with the Multi-LLM orchestration system. The interfaces are intentionally domain-neutral so the learning engine can later be applied to other Arg ecosystem domains without changing its constitutional role.
-
-## Architectural Role
-
-- ArgCore: frozen contracts, mandates, and enforcement boundary.
+- ArgCore: constitutional contracts, mandates, and enforcement.
 - ArgOS: governed runtime, execution, and orchestration.
-- ATL: canonical Translation Layer between Intent and Planning; semantic consistency is an architectural concern that must be empirically testable.
-- ArgAtlas: authoritative engineering record, continuity, provenance, and evidence.
-- ArgLearn: active learning, analysis, discovery, and experiment engine.
-
-## Authority Boundary
+- ACL-001 / ATL: canonical intelligence lifecycle and semantic Translation Layer between Intent and Planning.
+- ArgAtlas: engineering continuity, provenance, evidence, and project state.
+- ArgLearn: evidence-driven learning and improvement proposals.
 
 ArgLearn has epistemic autonomy, not constitutional authority.
+
+## Authority boundary
 
 ArgLearn MAY:
 - inspect authorized evidence;
 - identify knowledge gaps;
-- request or obtain authorized information;
 - design governed experiments;
 - execute approved experiments;
 - compare outcomes;
@@ -41,20 +34,42 @@ ArgLearn MUST NOT:
 - declare its own findings authoritative;
 - bypass ArgOS governance or ArgCore contracts.
 
-## Learning Loop
+## Canonical lifecycle relationship
 
-Observe -> identify gap -> hypothesize -> design experiment -> execute -> analyze -> derive finding -> record evidence -> assess confidence -> identify next gap.
+ACL-001 is the canonical lifecycle:
 
-## V1 Principle
+Intent
+-> ATL Translation
+-> Planning
+-> Execution
+-> Validation
+-> Observation
+-> Memory
+-> Next Intent
 
-ArgLearn learns from real evidence. Declared model capabilities are hypotheses; observed performance is evidence.
+Recovery is a controlled exception path. Learning is a governed feedback loop.
 
-The first learning domain is independent Multi-LLM orchestration: model strengths, weaknesses, reliability, cost, latency, task fit, independence of perspectives, and user-value outcomes.
+ArgLearn therefore studies lifecycle evidence and produces improvement proposals. It does not own the lifecycle or constitutional law.
 
-## Current integration checkpoint — 2026-08-30
+## Current integration status — 2026-09-27
 
-ACL-001 defines the Canonical Intelligence Lifecycle as Intent -> ATL Translation -> Planning -> Execution -> Validation -> Observation -> Memory -> Next Intent, with Recovery as an exception path and Learning as a governed feedback loop.
+ArgLearn remains non-blocking for the first complete ArgOS end-to-end execution.
 
-This creates a direct ArgLearn responsibility: empirical evaluation should be able to test lifecycle claims rather than merely measure isolated model outputs. Relevant measurements include execution outcomes, validation results, resource use, latency, reliability, recovery behavior, and evidence lineage.
+The first end-to-end priority is to prove the normal lifecycle through real governed execution and external digital actuation. ArgLearn should consume resulting evidence and later evaluate lifecycle performance, provider behavior, resource use, validation quality, and recovery behavior.
 
-An ATL reconciliation item is open because an older Rust workspace uses `argos-atl` for a C-ABI / foreign-language interface. ArgLearn must not assume that interface is equivalent to the semantic Translation Layer. The distinction is tracked in ArgAtlas.
+The historical ATL naming discrepancy remains preserved in ArgAtlas. The semantic ATL role is canonical; the older C-ABI use is not automatically equivalent.
+
+## Learning loop
+
+Observe
+-> identify gap
+-> hypothesize
+-> design experiment
+-> execute
+-> analyze
+-> derive finding
+-> record evidence
+-> assess confidence
+-> identify next gap
+
+Evidence outranks declared capability.
