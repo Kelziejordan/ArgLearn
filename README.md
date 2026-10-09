@@ -1,75 +1,40 @@
 # ArgLearn
 
-ArgLearn is the active learning, analysis, discovery, and experiment system for the Arg ecosystem.
+ArgLearn is the evidence-driven learning, analysis, discovery, and experiment system for the Arg ecosystem.
 
 ## Architectural role
 
 - ArgCore: constitutional contracts, mandates, and enforcement.
-- ArgOS: governed runtime, execution, and orchestration.
-- ACL-001 / ATL: canonical intelligence lifecycle and semantic Translation Layer between Intent and Planning.
+- Arg: governed ArgOS runtime, execution, and orchestration.
 - ArgAtlas: engineering continuity, provenance, evidence, and project state.
-- ArgLearn: evidence-driven learning and improvement proposals.
+- ArgLearn: analytical findings, governed experiments, confidence assessments, and improvement proposals.
 
 ArgLearn has epistemic autonomy, not constitutional authority.
 
 ## Authority boundary
 
-ArgLearn MAY:
-- inspect authorized evidence;
-- identify knowledge gaps;
-- design governed experiments;
-- execute approved experiments;
-- compare outcomes;
-- maintain hypotheses and empirical profiles;
-- derive findings and confidence;
-- recommend changes;
-- request additional evidence.
+ArgLearn MAY inspect authorized evidence, identify knowledge gaps, design and execute approved experiments, compare outcomes, maintain hypotheses and empirical profiles, derive findings and confidence, recommend changes, and request additional evidence.
 
-ArgLearn MUST NOT:
-- modify ArgCore;
-- alter constitutional mandates;
-- silently modify ArgOS behavior;
-- silently change production routing policy;
-- erase contradictory evidence;
-- declare its own findings authoritative;
-- bypass ArgOS governance or ArgCore contracts.
+ArgLearn MUST NOT modify ArgCore, alter constitutional mandates, silently modify ArgOS behavior or production routing, erase contradictory evidence, declare its findings authoritative, or bypass ArgOS governance and ArgCore contracts.
 
 ## Canonical lifecycle relationship
 
-ACL-001 is the canonical lifecycle:
+ACL-001 defines:
 
-Intent
--> ATL Translation
--> Planning
--> Execution
--> Validation
--> Observation
--> Memory
--> Next Intent
+Intent -> ATL Translation -> Planning -> Execution -> Validation -> Observation -> Memory -> Next Intent
 
-Recovery is a controlled exception path. Learning is a governed feedback loop.
+Recovery is a controlled exception path. Learning is a governed feedback loop. ArgLearn studies lifecycle evidence and produces improvement proposals; it does not own the lifecycle or constitutional law.
 
-ArgLearn therefore studies lifecycle evidence and produces improvement proposals. It does not own the lifecycle or constitutional law.
+## Current integration status — 2026-10-09
 
-## Current integration status — 2026-09-27
+ArgLearn remains a governed analytical component, not a prerequisite for the current economic validation gate and not a reason to expand runtime architecture. The ArgOS runtime consumes `@kelziejordan/argcore@1.0.0-argcore-008`; the R8/008 authority gate is closed at its bounded tested boundary and the foundation is frozen.
 
-ArgLearn remains non-blocking for the first complete ArgOS end-to-end execution.
+The next economic gate is `ARGOS-AFF-001.2 — Affiliate Offer Validation and Economic Unit Definition`. ArgLearn may help evaluate evidence and experiments when explicitly authorized, but findings remain proposals and cannot independently authorize offers, external actions, or runtime changes.
 
-The first end-to-end priority is to prove the normal lifecycle through real governed execution and external digital actuation. ArgLearn should consume resulting evidence and later evaluate lifecycle performance, provider behavior, resource use, validation quality, and recovery behavior.
-
-The historical ATL naming discrepancy remains preserved in ArgAtlas. The semantic ATL role is canonical; the older C-ABI use is not automatically equivalent.
+The overall ACL-001 lifecycle, complete adaptive learning loop, and full Arg ecosystem operation remain NOT_PROVEN unless supported by new executable evidence. See [ArgAtlas project state](https://github.com/Kelziejordan/ArgAtlas/blob/main/docs/PROJECT_STATE_2026-10-09.md).
 
 ## Learning loop
 
-Observe
--> identify gap
--> hypothesize
--> design experiment
--> execute
--> analyze
--> derive finding
--> record evidence
--> assess confidence
--> identify next gap
+Observe -> identify gap -> hypothesize -> design experiment -> execute under authorization -> analyze -> derive finding -> record evidence -> assess confidence -> identify next gap.
 
-Evidence outranks declared capability.
+Evidence outranks declared capability. Improvements require governed evaluation before adoption.
