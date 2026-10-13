@@ -132,6 +132,14 @@ export function createArgLearnEngine({ clock = Date.now, idFactory = randomUUID 
     if (evidence.some((item) => item.taskClass !== hypothesis.taskClass)) {
       throw new Error('candidate evidence task class does not match hypothesis scope');
     }
+    if (input.policyEffect !== undefined) {
+      if (!isObject(input.policyEffect)
+        || input.policyEffect.type !== 'REJECT_IF_PAYLOAD_FIELD_PRESENT_V1'
+        || typeof input.policyEffect.field !== 'string'
+        || !input.policyEffect.field.trim()) {
+        throw new TypeError('policyEffect must use a supported typed effect and non-empty field');
+      }
+    }
     const support = evidence.filter((item) => item.outcome === 'success');
     const contradiction = evidence.filter((item) => item.outcome !== 'success');
     const distinctSources = new Set(evidence.map((item) => item.sourceRef)).size;
