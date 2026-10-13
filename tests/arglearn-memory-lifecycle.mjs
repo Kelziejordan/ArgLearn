@@ -74,7 +74,7 @@ assert.throws(() => learn.deriveCandidate({
   hypothesisId: hypothesis.hypothesisId,
   statement: 'bad provenance',
   procedure: 'bad procedure',
-  evidenceRefs: ['missing-observation'],
+  evidenceRefs: [first.observationId, second.observationId, 'missing-observation'],
 }), /unknown observation reference/);
 
 assert.throws(() => learn.observe({
