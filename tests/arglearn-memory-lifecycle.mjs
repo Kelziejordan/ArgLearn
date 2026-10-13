@@ -100,15 +100,21 @@ const nextHypothesis = learn.formulateHypothesis({
   statement: 'The rejection boundary is invariant across runtime environments.',
   falsification: 'A task reaches a provider in any supported environment.',
 });
+assert.throws(() => learn.deriveCandidate({
+  hypothesisId: nextHypothesis.hypothesisId,
+  statement: 'Cherry-picked evidence must not hide an observed contradiction.',
+  procedure: 'Reject all dependency-bearing tasks.',
+  evidenceRefs: [first.observationId, contradiction.observationId],
+}), /omits observations in the hypothesis scope/);
 const contradicted = learn.deriveCandidate({
   hypothesisId: nextHypothesis.hypothesisId,
   statement: 'Dependency rejection is invariant.',
   procedure: 'Reject all dependency-bearing tasks.',
-  evidenceRefs: [first.observationId, contradiction.observationId],
+  evidenceRefs: [first.observationId, second.observationId, contradiction.observationId],
 });
-assert.deepEqual(contradicted.supportingObservationRefs, ['obs-1']);
+assert.deepEqual(contradicted.supportingObservationRefs, ['obs-1', 'obs-2']);
 assert.deepEqual(contradicted.contradictoryObservationRefs, ['obs-3']);
-assert.equal(contradicted.confidence, 0.5);
+assert.equal(contradicted.confidence, 2 / 3);
 assert.equal(contradicted.environmentFingerprints.length, 2);
 
 tick += 60_000;
