@@ -15,7 +15,7 @@ function digest(value) {
   return createHash('sha256').update(JSON.stringify(value)).digest('hex');
 }
 
-function validateObservation(input) {
+function validateObservation(input, clock) {
   if (!isObject(input)) throw new TypeError('observation must be an object');
   requireString(input.observationId, 'observationId');
   requireString(input.sourceRef, 'sourceRef');
@@ -28,6 +28,15 @@ function validateObservation(input) {
   if (input.evidenceRefs.some((ref) => typeof ref !== 'string' || !ref.trim())) {
     throw new TypeError('every evidence reference must be a non-empty string');
   }
+  if (input.environmentFingerprint !== undefined && typeof input.environmentFingerprint !== 'string') {
+    throw new TypeError('environmentFingerprint must be a string');
+  }
+  if (input.occurredAt !== undefined && typeof input.occurredAt !== 'string') {
+    throw new TypeError('occurredAt must be an ISO timestamp string');
+  }
+  if (input.tags !== undefined && (!Array.isArray(input.tags) || input.tags.some((tag) => typeof tag !== 'string'))) {
+    throw new TypeError('tags must be an array of strings');
+  }
   return Object.freeze({
     observationId: input.observationId,
     sourceRef: input.sourceRef,
@@ -36,9 +45,9 @@ function validateObservation(input) {
     runtimeVersion: input.runtimeVersion,
     environmentFingerprint: input.environmentFingerprint ?? 'unspecified',
     evidenceRefs: [...new Set(input.evidenceRefs)],
-    occurredAt: input.occurredAt ?? new Date().toISOString(),
+    occurredAt: input.occurredAt ?? nowIso(clock),
     metrics: isObject(input.metrics) ? clone(input.metrics) : {},
-    tags: Array.isArray(input.tags) ? [...new Set(input.tags)] : [],
+    tags: input.tags ? [...new Set(input.tags)] : [],
   });
 }
 
@@ -53,7 +62,7 @@ export function createArgLearnEngine({ clock = Date.now, idFactory = randomUUID 
   const candidates = new Map();
 
   function observe(input) {
-    const observation = validateObservation(input);
+    const observation = validateObservation(input, clock);
     const existing = observations.get(observation.observationId);
     if (existing && digest(existing) !== digest(observation)) {
       throw new Error(`observation identity collision: ${observation.observationId}`);
@@ -107,6 +116,14 @@ export function createArgLearnEngine({ clock = Date.now, idFactory = randomUUID 
     if (!hypothesis) throw new Error('candidate must reference an existing hypothesis');
     const evidenceIds = [...new Set(input.evidenceRefs ?? [])];
     if (evidenceIds.length === 0) throw new TypeError('candidate requires evidence references');
+    const requiredScope = new Set([
+      ...hypothesis.supportingObservationRefs,
+      ...hypothesis.contradictoryObservationRefs,
+    ]);
+    const omittedScope = [...requiredScope].filter((id) => !evidenceIds.includes(id));
+    if (omittedScope.length) {
+      throw new Error(`candidate evidence omits observations in the hypothesis scope: ${omittedScope.join(', ')}`);
+    }
     const evidence = evidenceIds.map((id) => {
       const item = observations.get(id);
       if (!item) throw new Error(`unknown observation reference: ${id}`);
