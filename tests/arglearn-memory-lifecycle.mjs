@@ -44,6 +44,7 @@ const candidate = learn.deriveCandidate({
   hypothesisId: hypothesis.hypothesisId,
   statement: 'Reject dependency-bearing tasks until dependency-aware execution is implemented.',
   procedure: 'Check dependency declarations before governance admission or provider invocation.',
+  policyEffect: { type: 'REJECT_IF_PAYLOAD_FIELD_PRESENT_V1', field: 'dependsOn' },
   evidenceRefs: [first.observationId, second.observationId],
   applicability: { runtimeVersion: 'arg-main@abc123', environmentFingerprint: 'node20-linux-v1' },
   limitations: ['Does not implement dependency-aware execution.'],
