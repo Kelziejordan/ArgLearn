@@ -142,6 +142,7 @@ export function createArgLearnEngine({ clock = Date.now, idFactory = randomUUID 
       taskClass: hypothesis.taskClass,
       statement: requireString(input.statement, 'statement'),
       procedure: requireString(input.procedure, 'procedure'),
+      ...(input.policyEffect !== undefined ? { policyEffect: clone(input.policyEffect) } : {}),
       applicability: isObject(input.applicability) ? clone(input.applicability) : {},
       limitations: Array.isArray(input.limitations) ? [...input.limitations] : [],
       falsification: hypothesis.falsification,
@@ -161,6 +162,7 @@ export function createArgLearnEngine({ clock = Date.now, idFactory = randomUUID 
         taskClass: hypothesis.taskClass,
         statement: input.statement,
         procedure: input.procedure,
+        policyEffect: input.policyEffect ?? null,
         applicability: input.applicability ?? {},
       }),
     });
