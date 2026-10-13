@@ -49,6 +49,7 @@ const candidate = learn.deriveCandidate({
   limitations: ['Does not implement dependency-aware execution.'],
 });
 assert.equal(candidate.status, 'PROVISIONAL');
+assert.deepEqual(candidate.policyEffect, { type: 'REJECT_IF_PAYLOAD_FIELD_PRESENT_V1', field: 'dependsOn' });
 assert.equal(candidate.confidence, 1);
 assert.equal(candidate.evidenceCount, 2);
 assert.equal(candidate.provenanceRefs.length, 4);
@@ -69,6 +70,14 @@ const passed = learn.evaluateCandidate(candidate.candidateId, {
   passed: true,
 });
 assert.equal(passed.disposition, 'ELIGIBLE_FOR_GOVERNED_REVIEW');
+
+assert.throws(() => learn.deriveCandidate({
+  hypothesisId: hypothesis.hypothesisId,
+  statement: 'unsupported executable policy effect',
+  procedure: 'must be rejected',
+  policyEffect: { type: 'EXECUTE_ARBITRARY_CODE', field: 'dependsOn' },
+  evidenceRefs: [first.observationId, second.observationId],
+}), /supported typed effect/);
 
 assert.throws(() => learn.deriveCandidate({
   hypothesisId: hypothesis.hypothesisId,
