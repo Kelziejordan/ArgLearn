@@ -132,5 +132,74 @@ const exported = learn.exportEvidence();
 assert.equal(exported.observations.length, 3);
 assert.equal(exported.candidates.length, 2);
 assert.ok(exported.generatedAt);
+
+// Deterministic replay: independent engine instances with identical inputs,
+// clock, and ID factory must produce byte-equivalent canonical exports.
+function replayScenario() {
+  let replayTick = Date.parse('2026-10-13T12:00:00.000Z');
+  let replayId = 0;
+  const engine = createArgLearnEngine({
+    clock: () => replayTick,
+    idFactory: () => `replay-${++replayId}`,
+  });
+  engine.observe({
+    observationId: 'replay-obs-1',
+    sourceRef: 'tcs:replay:1',
+    taskClass: 'replay-class',
+    outcome: 'success',
+    runtimeVersion: 'runtime@replay',
+    environmentFingerprint: 'env-replay',
+    evidenceRefs: ['tcs:replay:1'],
+    metrics: { value: 7 },
+    tags: ['replay'],
+  });
+  engine.observe({
+    observationId: 'replay-obs-2',
+    sourceRef: 'tcs:replay:2',
+    taskClass: 'replay-class',
+    outcome: 'failure',
+    runtimeVersion: 'runtime@replay',
+    environmentFingerprint: 'env-replay',
+    evidenceRefs: ['tcs:replay:2'],
+    metrics: { value: 3 },
+  });
+  engine.identifyGap({
+    taskClass: 'replay-class',
+    question: 'Does the replay reproduce?',
+    whyItMatters: 'Stable evidence analysis must be repeatable.',
+  });
+  const replayHypothesis = engine.formulateHypothesis({
+    taskClass: 'replay-class',
+    statement: 'Replay is deterministic.',
+    falsification: 'Equivalent inputs produce different output.',
+  });
+  engine.deriveCandidate({
+    hypothesisId: replayHypothesis.hypothesisId,
+    statement: 'Retain both supporting and contradictory evidence.',
+    procedure: 'Evaluate the complete scoped evidence set.',
+    evidenceRefs: ['replay-obs-1', 'replay-obs-2'],
+    limitations: ['Determinism test only; no claim of predictive validity.'],
+  });
+  replayTick += 1000;
+  return engine.exportEvidence();
+}
+const replayA = replayScenario();
+const replayB = replayScenario();
+assert.deepEqual(replayA, replayB, 'independent deterministic replays must match exactly');
+
+// Export snapshot isolation: callers may mutate their copy without mutating
+// engine state or changing later exports.
+const beforeMutation = learn.exportEvidence();
+const mutatedExport = learn.exportEvidence();
+mutatedExport.observations[0].evidenceRefs.push('caller-injected-reference');
+mutatedExport.observations[0].metrics.correct = false;
+mutatedExport.hypotheses[0].statement = 'caller mutation';
+mutatedExport.candidates[0].evidenceRefs.push('caller-injected-observation');
+mutatedExport.candidates.push({ candidateId: 'caller-injected-candidate' });
+const afterMutation = learn.exportEvidence();
+assert.deepEqual(afterMutation, beforeMutation, 'mutating an export must not mutate internal engine state');
+
 console.log('PASS: ArgLearn evidence -> hypothesis -> provisional candidate -> validation disposition');
 console.log('PASS: provenance, identity collision, contradictions, environment scope, and authority boundary');
+console.log('PASS: independent-engine deterministic replay equivalence');
+console.log('PASS: export snapshot isolation');
