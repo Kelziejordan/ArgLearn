@@ -1,5 +1,7 @@
 # ArgLearn
 
+> Repository role: see [`REPOSITORY_ROLE_DECLARATION.md`](./REPOSITORY_ROLE_DECLARATION.md). ArgLearn is the governed analytical learning engine, not a runtime or constitutional authority.
+
 ArgLearn is the evidence-driven learning, analysis, discovery, and experiment system for the Arg ecosystem.
 
 ## Architectural role
@@ -10,6 +12,10 @@ ArgLearn is the evidence-driven learning, analysis, discovery, and experiment sy
 - ArgLearn: analytical findings, governed experiments, confidence assessments, and improvement proposals.
 
 ArgLearn has epistemic autonomy, not constitutional authority.
+
+## Runtime integration
+
+Arg consumes ArgLearn as the `@kelziejordan/arglearn` package dependency, pinned to a specific Git commit in Arg's package manifest. Arg owns the runtime integration, TCS evidence connection, and Knowledge Vault persistence. ArgLearn exports the learning engine; it does not independently invoke providers, execute tasks, persist the runtime Knowledge Vault, or promote its own candidates.
 
 ## Authority boundary
 
