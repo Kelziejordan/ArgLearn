@@ -15,7 +15,7 @@ ArgLearn has epistemic autonomy, not constitutional authority.
 
 ## Runtime integration
 
-Arg consumes ArgLearn as the `@kelziejordan/arglearn` package dependency, pinned to a specific Git commit in Arg's package manifest. Arg owns the runtime integration, TCS evidence connection, and Knowledge Vault persistence. ArgLearn exports the learning engine; it does not independently invoke providers, execute tasks, persist the runtime Knowledge Vault, or promote its own candidates.
+Arg consumes ArgLearn as the `@kelziejordan/arglearn` package dependency, pinned in Arg's package manifest to Git commit `d129803e6ef09920c47b8a3d8550e84bb97c1ff7`. Arg owns the runtime integration, TCS evidence connection, and Knowledge Vault persistence. ArgLearn exports the learning engine; it does not independently invoke providers, execute tasks, persist the runtime Knowledge Vault, or promote its own candidates.
 
 ## Authority boundary
 
